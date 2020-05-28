@@ -14,7 +14,7 @@ public class WebSocketClient implements WebSocket.Listener {
     private WebSocket server = null;
     private String TOKEN = "wss://iotnet.teracom.dk/app?token=vnoSwAAAABFpb3RuZXQudGVyYWNvbS5ka_PUdsF7f2NeS2qMCNPTXQg=";
     //TODO:  hree
-    // private final DbConnection database  = new DbConnectionImpl();
+     private final DbConnection database  = new DbConnectionImpl();
 
     // Send down-link message to device
     // Must be in Json format according to https://github.com/ihavn/IoT_Semester_project/blob/master/LORA_NETWORK_SERVER.md
@@ -88,7 +88,7 @@ public class WebSocketClient implements WebSocket.Listener {
         int intTemperature = Integer.parseInt(hexMeasurement[1], 16);
         int intCO2 = Integer.parseInt(hexMeasurement[2], 16);
         //TODO:  eeee
-        //int intNoise = Integer.parseInt(hexMeasurement[3], 16);
+        int intNoise = Integer.parseInt(hexMeasurement[3], 16);
 
         var ratio = 100;
 
@@ -96,10 +96,10 @@ public class WebSocketClient implements WebSocket.Listener {
         float floatTemperature = ((float)intTemperature)/ratio;
         float floatCO2 = ((float)intCO2)/ratio;
         //TODO: EEEEEEEEEEE
-        //float floatNoise = ((float)intNoise)/ratio;
+        float floatNoise = ((float)intNoise)/ratio;
 
         //TODO:  heee
-        //database.insert(floatCO2, floatHumidity, floatTemperature, 1, floatNoise);
+        database.insert(floatCO2, floatHumidity, floatTemperature, 1, floatNoise);
         System.out.println("Temperature: " + floatTemperature + "\nHumidity: " + floatHumidity + "\nCO2: "  + floatCO2 + "\n");
 
         return new CompletableFuture().completedFuture("onText() completed.").thenAccept(System.out::println);

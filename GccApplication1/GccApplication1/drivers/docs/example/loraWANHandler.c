@@ -136,6 +136,8 @@ void lora_handler_task( void *pvParameters )
 		uint16_t hum = 12345; // Dummy humidity
 		int16_t temp = 675; // Dummy temp
 		uint16_t co2_ppm = 1050; // Dummy CO2
+		int16_t noise = 1050; // Dummy CO2
+
 
 		_uplink_payload.bytes[0] = hum >> 8;
 		_uplink_payload.bytes[1] = hum & 0xFF;
@@ -143,6 +145,8 @@ void lora_handler_task( void *pvParameters )
 		_uplink_payload.bytes[3] = temp & 0xFF;
 		_uplink_payload.bytes[4] = co2_ppm >> 8;
 		_uplink_payload.bytes[5] = co2_ppm & 0xFF;
+		_uplink_payload.bytes[6] = noise >> 8;
+		_uplink_payload.bytes[7] = noise & 0xFF;
 
 		led_short_puls(led_ST4);  // OPTIONAL
 		printf("Upload Message >%s<\n", lora_driver_map_return_code_to_text(							lora_driver_sent_upload_message(false, &_uplink_payload)));

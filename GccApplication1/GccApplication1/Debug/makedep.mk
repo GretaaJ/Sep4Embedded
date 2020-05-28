@@ -4,6 +4,8 @@
 
 drivers\docs\example\loraWANHandler.c
 
+Source\CO2.c
+
 FreeRTOS\FreeRTOSTraceDriver\FreeRTOSTraceDriver.c
 
 FreeRTOS\src\croutine.c

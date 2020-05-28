@@ -3,13 +3,7 @@ import java.time.LocalDate;
 
 public class DbConnectionImpl implements DbConnection{
     static String connectionStr =
-            "tcp:LAPTOP-D5VQT9SU:49172;"
-                    + "database=SEP4;"
-                    + "user=Sep4_Visitor;"
-                    + "password=2104202021042020;"
-                    + "encrypt=true;"
-                    + "trustServerCertificate=false;"
-                    + "loginTimeout=30;";
+            "jdbc:sqlserver://sepfour.database.windows.net:1433;database=SEP4;user=superuser@sepfour;password=28052020Ul;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
     public DbConnectionImpl(){
 
     }
