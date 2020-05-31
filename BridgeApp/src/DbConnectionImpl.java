@@ -23,6 +23,7 @@ public class DbConnectionImpl implements DbConnection{
             resultSet = prepsInsertProduct.getGeneratedKeys();
 
             // Print the ID of the inserted row.
+
             if(resultSet  !=   null)
             {
                 System.out.println("Hjelp");

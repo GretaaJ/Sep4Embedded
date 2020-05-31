@@ -11,6 +11,7 @@
 
 #include <lora_driver.h>
 #include <iled.h>
+#include <mh_z19.h>
 
 // Parameters for OTAA join - You have got these in a mail from IHA
 #define LORA_appEUI "20B49DA07ECA0355"
@@ -121,11 +122,11 @@ void lora_handler_task( void *pvParameters )
 
 	_lora_setup();
 
-	_uplink_payload.len = 6;
+	_uplink_payload.len = 8;
 	_uplink_payload.port_no = 2;
 
 	 TickType_t xLastWakeTime;
-	 const TickType_t xFrequency = pdMS_TO_TICKS(300000UL); // Upload message every 5 minutes (300000 ms)
+	 const TickType_t xFrequency = pdMS_TO_TICKS(10000UL); // Upload message every 5 minutes (300000 ms)
 	 xLastWakeTime = xTaskGetTickCount();
 	 
 	for(;;)
@@ -133,12 +134,14 @@ void lora_handler_task( void *pvParameters )
 		vTaskDelayUntil( &xLastWakeTime, xFrequency );
 
 		// Some dummy payload
-		uint16_t hum = 12345; // Dummy humidity
-		int16_t temp = 675; // Dummy temp
-		uint16_t co2_ppm = 1050; // Dummy CO2
-		int16_t noise = 1050; // Dummy CO2
+		uint16_t hum = 4000; // Dummy humidity
+		int16_t temp = 4600; // Dummy temp
+		uint16_t co2_ppm = 4050; // Dummy CO2
+		int16_t noise = 4550; // Dummy CO2
 
-
+		//uint16_t ppm;
+		//mh_z19_return_code_t rc;
+		
 		_uplink_payload.bytes[0] = hum >> 8;
 		_uplink_payload.bytes[1] = hum & 0xFF;
 		_uplink_payload.bytes[2] = temp >> 8;

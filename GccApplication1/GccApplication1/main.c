@@ -19,13 +19,21 @@
 #include <FreeRTOSTraceDriver.h>
 #include <stdio_driver.h>
 #include <serial.h>
+#include <mh_z19.h>
+#include <hih8120.h>
 
+#include "Source/Headers/CO2.h"
 // Needed for LoRaWAN
 #include <lora_driver.h>
+
+
+
 
 // define two Tasks
 void task1( void *pvParameters );
 void task2( void *pvParameters );
+void CO2Sensor(void *pvParameters);
+void T_HSensor(void *pvParameters);
 
 // define semaphore handle
 SemaphoreHandle_t xTestSemaphore;
@@ -34,6 +42,9 @@ SemaphoreHandle_t xTestSemaphore;
 void lora_handler_create(UBaseType_t lora_handler_task_priority);
 
 /*-----------------------------------------------------------*/
+
+
+
 void create_tasks_and_semaphores(void)
 {
 	// Semaphores are useful to stop a Task proceeding, where it should be paused to wait,
@@ -63,6 +74,22 @@ void create_tasks_and_semaphores(void)
 	,  NULL
 	,  1  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
 	,  NULL );
+	
+	xTaskCreate(
+	CO2Sensor
+	, "CO2 sensor"
+	, configMINIMAL_STACK_SIZE
+	, xTestSemaphore
+	, 3
+	, NULL);
+	
+	xTaskCreate(
+	T_HSensor
+	, "TH sensor"
+	, configMINIMAL_STACK_SIZE
+	, xTestSemaphore
+	, 3
+	, NULL);
 }
 
 /*-----------------------------------------------------------*/
@@ -109,9 +136,19 @@ void task2( void *pvParameters )
 	}
 }
 
+
 /*-----------------------------------------------------------*/
 void initialiseSystem()
 {
+	
+	mh_z19_create(ser_USART3, &my_co2_call_back);
+	
+	if ( HIH8120_OK != hih8120Create() )
+	{
+		puts("driver not created OK");
+		return 1;
+	}
+	
 	// Set output ports for leds used in the example
 	DDRA |= _BV(DDA0) | _BV(DDA7);
 	// Initialise the trace-driver to be used together with the R2R-Network
@@ -128,12 +165,15 @@ void initialiseSystem()
 	lora_driver_create(LORA_USART, NULL);
 	// Create LoRaWAN task and start it up with priority 3
 	lora_handler_create(3);
+	
+	
 }
 
 /*-----------------------------------------------------------*/
 int main(void)
 {
 	initialiseSystem(); // Must be done as the very first thing!!
+	
 	printf("Program Started!!\n");
 	vTaskStartScheduler(); // Initialise and run the freeRTOS scheduler. Execution should never return from here.
 

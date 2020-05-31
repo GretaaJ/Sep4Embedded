@@ -1,47 +1,46 @@
-main.d main.o: .././main.c \
- d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
- d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
+Source/Tasks/CO2.d Source/Tasks/CO2.o: ../Source/Tasks/CO2.c \
+ ../FreeRTOS/src/ATMEGA_FreeRTOS.h \
+ d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdint.h \
- d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h \
- d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
+ ../FreeRTOS/src/FreeRTOSConfig.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
+ d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
  D:\Atmel\7.0\Packs\atmel\ATmega_DFP\1.3.300\include/avr/iom2560.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\portpins.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\common.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\version.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
- ../drivers/hal_defs.h ../drivers/serial.h \
- d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
- ../drivers/ihal.h ../FreeRTOS/src/ATMEGA_FreeRTOS.h \
- ../FreeRTOS/src/FreeRTOSConfig.h ../FreeRTOS/src/projdefs.h \
- ../FreeRTOS/src/portable.h ../FreeRTOS/src/portmacro.h \
+ ../FreeRTOS/src/projdefs.h ../FreeRTOS/src/portable.h \
+ ../FreeRTOS/src/portmacro.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\wdt.h \
  ../FreeRTOS/src/mpu_wrappers.h ../FreeRTOS/src/FreeRTOSVariant.h \
  ../FreeRTOS/src/ATMEGA_FreeRTOS.h ../FreeRTOS/src/task.h \
- ../FreeRTOS/src/list.h ../FreeRTOS/src/semphr.h ../FreeRTOS/src/queue.h \
- ../drivers/FreeRTOSTraceDriver.h ../drivers/stdio_driver.h \
- ../drivers/mh_z19.h ../drivers/hih8120.h .././Source/Headers/CO2.h \
- ../drivers/lora_driver.h ../FreeRTOS/src/message_buffer.h \
- ../FreeRTOS/src/stream_buffer.h
+ ../FreeRTOS/src/list.h \
+ d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
+ d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h \
+ ../drivers/stdio_driver.h \
+ d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
+ ../Source/Tasks/../Headers/CO2.h ../drivers/mh_z19.h ../drivers/serial.h \
+ ../FreeRTOS/src/semphr.h ../FreeRTOS/src/queue.h
 
-d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
+../FreeRTOS/src/ATMEGA_FreeRTOS.h:
 
-d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h:
+d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h:
 
 d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h:
 
 d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdint.h:
 
-d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h:
-
-d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h:
+../FreeRTOS/src/FreeRTOSConfig.h:
 
 d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
 d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h:
+
+d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h:
 
 D:\Atmel\7.0\Packs\atmel\ATmega_DFP\1.3.300\include/avr/iom2560.h:
 
@@ -54,18 +53,6 @@ d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\version.h:
 d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h:
 
 d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h:
-
-../drivers/hal_defs.h:
-
-../drivers/serial.h:
-
-d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
-
-../drivers/ihal.h:
-
-../FreeRTOS/src/ATMEGA_FreeRTOS.h:
-
-../FreeRTOS/src/FreeRTOSConfig.h:
 
 ../FreeRTOS/src/projdefs.h:
 
@@ -85,22 +72,20 @@ d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\wdt.h:
 
 ../FreeRTOS/src/list.h:
 
-../FreeRTOS/src/semphr.h:
+d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
 
-../FreeRTOS/src/queue.h:
-
-../drivers/FreeRTOSTraceDriver.h:
+d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h:
 
 ../drivers/stdio_driver.h:
 
+d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
+
+../Source/Tasks/../Headers/CO2.h:
+
 ../drivers/mh_z19.h:
 
-../drivers/hih8120.h:
+../drivers/serial.h:
 
-.././Source/Headers/CO2.h:
+../FreeRTOS/src/semphr.h:
 
-../drivers/lora_driver.h:
-
-../FreeRTOS/src/message_buffer.h:
-
-../FreeRTOS/src/stream_buffer.h:
+../FreeRTOS/src/queue.h:

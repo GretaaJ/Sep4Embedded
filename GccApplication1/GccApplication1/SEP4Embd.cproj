@@ -164,10 +164,16 @@
     <Compile Include="drivers\docs\example\loraWANHandler.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Headers\CO2.h">
+    <Compile Include="Source\Headers\CO2.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Source\CO2.c">
+    <Compile Include="Source\Headers\Temp_Hum.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Tasks\CO2.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Tasks\Temp_Hum.c">
       <SubType>compile</SubType>
     </Compile>
     <None Include="drivers\docs\example\main.c">
@@ -343,8 +349,9 @@
     <Folder Include="FreeRTOS\Example\" />
     <Folder Include="FreeRTOS\FreeRTOSTraceDriver\" />
     <Folder Include="FreeRTOS\src\" />
-    <Folder Include="Headers" />
     <Folder Include="Source" />
+    <Folder Include="Source\Headers" />
+    <Folder Include="Source\Tasks" />
   </ItemGroup>
   <ItemGroup>
     <None Include="drivers\.git">

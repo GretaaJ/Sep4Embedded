@@ -24,7 +24,8 @@ drivers/docs/example/loraWANHandler.d \
  ../FreeRTOS/src/list.h ../drivers/lora_driver.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  ../drivers/serial.h ../FreeRTOS/src/message_buffer.h \
- ../FreeRTOS/src/stream_buffer.h ../drivers/iled.h ../drivers/ihal.h
+ ../FreeRTOS/src/stream_buffer.h ../drivers/iled.h ../drivers/ihal.h \
+ ../drivers/mh_z19.h
 
 d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h:
 
@@ -89,3 +90,5 @@ d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool
 ../drivers/iled.h:
 
 ../drivers/ihal.h:
+
+../drivers/mh_z19.h:
