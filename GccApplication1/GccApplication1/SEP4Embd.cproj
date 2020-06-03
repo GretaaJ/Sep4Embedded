@@ -164,13 +164,31 @@
     <Compile Include="drivers\docs\example\loraWANHandler.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Source\DataPacketHandler.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Source\Headers\CO2.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Headers\Controller.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Headers\DataPacketHandler.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Headers\rcServo.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Source\Headers\Temp_Hum.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Source\Tasks\CO2.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Tasks\Controller.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Tasks\rcServo.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Source\Tasks\Temp_Hum.c">

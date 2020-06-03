@@ -1,11 +1,8 @@
 Source/Tasks/Temp_Hum.d Source/Tasks/Temp_Hum.o: \
- ../Source/Tasks/Temp_Hum.c \
+ ../Source/Tasks/Temp_Hum.c ../FreeRTOS/src/ATMEGA_FreeRTOS.h \
+ d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdint.h \
- ../drivers/hih8120.h \
- d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
- ../FreeRTOS/src/ATMEGA_FreeRTOS.h \
- d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
  ../FreeRTOS/src/FreeRTOSConfig.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
@@ -24,20 +21,17 @@ Source/Tasks/Temp_Hum.d Source/Tasks/Temp_Hum.o: \
  ../FreeRTOS/src/list.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h \
- ../drivers/stdio_driver.h ../Source/Tasks/../Headers/Temp_Hum.h \
- ../FreeRTOS/src/semphr.h ../FreeRTOS/src/queue.h
-
-d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h:
-
-d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdint.h:
-
-../drivers/hih8120.h:
-
-d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
+ ../drivers/stdio_driver.h \
+ d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
+ ../Source/Tasks/../Headers/Temp_Hum.h ../drivers/hih8120.h
 
 ../FreeRTOS/src/ATMEGA_FreeRTOS.h:
 
 d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h:
+
+d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h:
+
+d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdint.h:
 
 ../FreeRTOS/src/FreeRTOSConfig.h:
 
@@ -83,8 +77,8 @@ d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.
 
 ../drivers/stdio_driver.h:
 
+d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
+
 ../Source/Tasks/../Headers/Temp_Hum.h:
 
-../FreeRTOS/src/semphr.h:
-
-../FreeRTOS/src/queue.h:
+../drivers/hih8120.h:

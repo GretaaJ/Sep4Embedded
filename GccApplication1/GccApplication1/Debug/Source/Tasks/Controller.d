@@ -1,4 +1,5 @@
-main.d main.o: .././main.c ../FreeRTOS/src/ATMEGA_FreeRTOS.h \
+Source/Tasks/Controller.d Source/Tasks/Controller.o: \
+ ../Source/Tasks/Controller.c ../FreeRTOS/src/ATMEGA_FreeRTOS.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdint.h \
@@ -17,18 +18,18 @@ main.d main.o: .././main.c ../FreeRTOS/src/ATMEGA_FreeRTOS.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\wdt.h \
  ../FreeRTOS/src/mpu_wrappers.h ../FreeRTOS/src/FreeRTOSVariant.h \
  ../FreeRTOS/src/ATMEGA_FreeRTOS.h ../FreeRTOS/src/task.h \
- ../FreeRTOS/src/list.h \
+ ../FreeRTOS/src/list.h ../drivers/../Source/Headers/Temp_Hum.h \
+ ../drivers/hih8120.h \
+ d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
+ ../drivers/../Source/Headers/CO2.h ../drivers/mh_z19.h \
+ ../drivers/serial.h ../FreeRTOS/src/semphr.h ../FreeRTOS/src/queue.h \
+ ../drivers/../Source/Headers/DataPacketHandler.h \
+ ../drivers/lora_driver.h ../FreeRTOS/src/message_buffer.h \
+ ../FreeRTOS/src/stream_buffer.h \
+ ../drivers/../Source/Headers/Controller.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
  d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h \
- ../drivers/hal_defs.h ../drivers/serial.h \
- d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
- ../drivers/ihal.h ../drivers/FreeRTOSTraceDriver.h \
- ../drivers/stdio_driver.h ../FreeRTOS/src/queue.h \
- .././Source/Headers/rcServo.h ../drivers/mh_z19.h ../drivers/rcServo.h \
- .././Source/Headers/CO2.h ../FreeRTOS/src/semphr.h \
- ../FreeRTOS/src/queue.h ../drivers/lora_driver.h \
- ../FreeRTOS/src/message_buffer.h ../FreeRTOS/src/stream_buffer.h \
- ../drivers/hih8120.h
+ ../FreeRTOS/src/queue.h
 
 ../FreeRTOS/src/ATMEGA_FreeRTOS.h:
 
@@ -76,35 +77,23 @@ d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\wdt.h:
 
 ../FreeRTOS/src/list.h:
 
-d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
+../drivers/../Source/Headers/Temp_Hum.h:
 
-d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h:
-
-../drivers/hal_defs.h:
-
-../drivers/serial.h:
+../drivers/hih8120.h:
 
 d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
 
-../drivers/ihal.h:
-
-../drivers/FreeRTOSTraceDriver.h:
-
-../drivers/stdio_driver.h:
-
-../FreeRTOS/src/queue.h:
-
-.././Source/Headers/rcServo.h:
+../drivers/../Source/Headers/CO2.h:
 
 ../drivers/mh_z19.h:
 
-../drivers/rcServo.h:
-
-.././Source/Headers/CO2.h:
+../drivers/serial.h:
 
 ../FreeRTOS/src/semphr.h:
 
 ../FreeRTOS/src/queue.h:
+
+../drivers/../Source/Headers/DataPacketHandler.h:
 
 ../drivers/lora_driver.h:
 
@@ -112,4 +101,10 @@ d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool
 
 ../FreeRTOS/src/stream_buffer.h:
 
-../drivers/hih8120.h:
+../drivers/../Source/Headers/Controller.h:
+
+d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
+
+d:\atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h:
+
+../FreeRTOS/src/queue.h:

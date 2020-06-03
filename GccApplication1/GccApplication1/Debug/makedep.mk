@@ -4,7 +4,13 @@
 
 drivers\docs\example\loraWANHandler.c
 
+Source\DataPacketHandler.c
+
 Source\Tasks\CO2.c
+
+Source\Tasks\Controller.c
+
+Source\Tasks\rcServo.c
 
 Source\Tasks\Temp_Hum.c
 

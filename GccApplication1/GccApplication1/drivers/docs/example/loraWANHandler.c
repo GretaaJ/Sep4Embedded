@@ -6,30 +6,40 @@
 */
 #include <stddef.h>
 #include <stdio.h>
-
+#include <stdint.h>
 #include <ATMEGA_FreeRTOS.h>
-
 #include <lora_driver.h>
 #include <iled.h>
-#include <mh_z19.h>
+#include <queue.h>
+#include <hih8120.h>
+#include <mh_z19.h> //istrink cj situos
+#include "../Source/Headers/CO2.h"
+#include "../Source/Headers/Temp_Hum.h"
+
+#include <message_buffer.h>
 
 // Parameters for OTAA join - You have got these in a mail from IHA
 #define LORA_appEUI "20B49DA07ECA0355"
 #define LORA_appKEY "906848809F04C80074DD032C1CADDF84"
 
+lora_payload_t payload;
+
+QueueHandle_t xQueue;
+
+
 static char _out_buf[100];
 
 void lora_handler_task( void *pvParameters );
 
-static lora_payload_t _uplink_payload;
+//static lora_payload_t _uplink_payload;
 
-void lora_handler_create(UBaseType_t lora_handler_task_priority)
+void lora_handler_create(UBaseType_t lora_handler_task_priority, QueueHandle_t xQueue)
 {
 	xTaskCreate(
 	lora_handler_task
 	,  (const portCHAR *)"LRHand"  // A name just for humans
 	,  configMINIMAL_STACK_SIZE+200  // This stack size can be checked & adjusted by reading the Stack Highwater
-	,  NULL
+	,  xQueue
 	,  lora_handler_task_priority  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
 	,  NULL );
 }
@@ -122,36 +132,23 @@ void lora_handler_task( void *pvParameters )
 
 	_lora_setup();
 
-	_uplink_payload.len = 8;
-	_uplink_payload.port_no = 2;
 
 	 TickType_t xLastWakeTime;
-	 const TickType_t xFrequency = pdMS_TO_TICKS(10000UL); // Upload message every 5 minutes (300000 ms)
+	 const TickType_t xFrequency = pdMS_TO_TICKS(300000UL); // Upload message every 5 minutes (300000 ms) man atrodo kad valanda yra 3 600 000
 	 xLastWakeTime = xTaskGetTickCount();
 	 
 	for(;;)
 	{
 		vTaskDelayUntil( &xLastWakeTime, xFrequency );
-
-		// Some dummy payload
-		uint16_t hum = 4000; // Dummy humidity
-		int16_t temp = 4600; // Dummy temp
-		uint16_t co2_ppm = 4050; // Dummy CO2
-		int16_t noise = 4550; // Dummy CO2
-
-		//uint16_t ppm;
-		//mh_z19_return_code_t rc;
 		
-		_uplink_payload.bytes[0] = hum >> 8;
-		_uplink_payload.bytes[1] = hum & 0xFF;
-		_uplink_payload.bytes[2] = temp >> 8;
-		_uplink_payload.bytes[3] = temp & 0xFF;
-		_uplink_payload.bytes[4] = co2_ppm >> 8;
-		_uplink_payload.bytes[5] = co2_ppm & 0xFF;
-		_uplink_payload.bytes[6] = noise >> 8;
-		_uplink_payload.bytes[7] = noise & 0xFF;
+		BaseType_t em = xQueueReceive(xQueue, &payload, 0);
+		
+		if (em == pdTRUE)
+		{
+			led_short_puls(led_ST4);  // OPTIONAL
+			printf("Upload Message >%s<\n", lora_driver_map_return_code_to_text(							lora_driver_sent_upload_message(false, &payload)));
 
-		led_short_puls(led_ST4);  // OPTIONAL
-		printf("Upload Message >%s<\n", lora_driver_map_return_code_to_text(							lora_driver_sent_upload_message(false, &_uplink_payload)));
+		}
+		
 	}
 }

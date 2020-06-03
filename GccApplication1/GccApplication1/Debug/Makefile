@@ -65,7 +65,10 @@ SUBDIRS :=  \
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../drivers/docs/example/loraWANHandler.c \
+../Source/DataPacketHandler.c \
 ../Source/Tasks/CO2.c \
+../Source/Tasks/Controller.c \
+../Source/Tasks/rcServo.c \
 ../Source/Tasks/Temp_Hum.c \
 ../FreeRTOS/FreeRTOSTraceDriver/FreeRTOSTraceDriver.c \
 ../FreeRTOS/src/croutine.c \
@@ -89,7 +92,10 @@ ASM_SRCS +=
 
 OBJS +=  \
 drivers/docs/example/loraWANHandler.o \
+Source/DataPacketHandler.o \
 Source/Tasks/CO2.o \
+Source/Tasks/Controller.o \
+Source/Tasks/rcServo.o \
 Source/Tasks/Temp_Hum.o \
 FreeRTOS/FreeRTOSTraceDriver/FreeRTOSTraceDriver.o \
 FreeRTOS/src/croutine.o \
@@ -106,7 +112,10 @@ main.o
 
 OBJS_AS_ARGS +=  \
 drivers/docs/example/loraWANHandler.o \
+Source/DataPacketHandler.o \
 Source/Tasks/CO2.o \
+Source/Tasks/Controller.o \
+Source/Tasks/rcServo.o \
 Source/Tasks/Temp_Hum.o \
 FreeRTOS/FreeRTOSTraceDriver/FreeRTOSTraceDriver.o \
 FreeRTOS/src/croutine.o \
@@ -123,7 +132,10 @@ main.o
 
 C_DEPS +=  \
 drivers/docs/example/loraWANHandler.d \
+Source/DataPacketHandler.d \
 Source/Tasks/CO2.d \
+Source/Tasks/Controller.d \
+Source/Tasks/rcServo.d \
 Source/Tasks/Temp_Hum.d \
 FreeRTOS/FreeRTOSTraceDriver/FreeRTOSTraceDriver.d \
 FreeRTOS/src/croutine.d \
@@ -140,7 +152,10 @@ main.d
 
 C_DEPS_AS_ARGS +=  \
 drivers/docs/example/loraWANHandler.d \
+Source/DataPacketHandler.d \
 Source/Tasks/CO2.d \
+Source/Tasks/Controller.d \
+Source/Tasks/rcServo.d \
 Source/Tasks/Temp_Hum.d \
 FreeRTOS/FreeRTOSTraceDriver/FreeRTOSTraceDriver.d \
 FreeRTOS/src/croutine.d \
@@ -176,7 +191,28 @@ drivers/docs/example/loraWANHandler.o: ../drivers/docs/example/loraWANHandler.c
 	@echo Finished building: $<
 	
 
+Source/DataPacketHandler.o: ../Source/DataPacketHandler.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)D:\Atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L  -I"D:\Atmel\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../FreeRTOS/src" -I"../drivers"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega2560 -B "D:\Atmel\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega2560" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 Source/Tasks/CO2.o: ../Source/Tasks/CO2.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)D:\Atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L  -I"D:\Atmel\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../FreeRTOS/src" -I"../drivers"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega2560 -B "D:\Atmel\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega2560" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Source/Tasks/Controller.o: ../Source/Tasks/Controller.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)D:\Atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L  -I"D:\Atmel\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../FreeRTOS/src" -I"../drivers"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega2560 -B "D:\Atmel\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega2560" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Source/Tasks/rcServo.o: ../Source/Tasks/rcServo.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)D:\Atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L  -I"D:\Atmel\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../FreeRTOS/src" -I"../drivers"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega2560 -B "D:\Atmel\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega2560" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

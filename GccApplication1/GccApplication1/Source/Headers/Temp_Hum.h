@@ -9,3 +9,5 @@
 #include <hih8120.h>
 
 void T_HSensor(void *pvParameters);
+uint16_t get_Hum();
+uint16_t get_Temp();
