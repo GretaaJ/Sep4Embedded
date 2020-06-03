@@ -1,6 +1,6 @@
 # Prerequisites
 *.d
-
+*.atsuo
 # Object files
 *.o
 *.ko
@@ -11,10 +11,14 @@
 *.ilk
 *.map
 *.exp
-
-# Precompiled Headers
+*.iss
+*.mk
+*.lss
+*.iss
+*.srec
 *.gch
 *.pch
+*.cproj
 
 # Libraries
 *.lib
