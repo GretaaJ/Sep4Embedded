@@ -6,6 +6,10 @@ drivers\docs\example\loraWANHandler.c
 
 Source\Tasks\CO2.c
 
+Source\Tasks\Logging.c
+
+Source\Tasks\Sound.c
+
 Source\Tasks\Temp_Hum.c
 
 FreeRTOS\FreeRTOSTraceDriver\FreeRTOSTraceDriver.c
