@@ -21,10 +21,15 @@
 #include <serial.h>
 #include <mh_z19.h>
 #include <hih8120.h>
+#include "event_groups.h"
 
 #include "Source/Headers/CO2.h"
 // Needed for LoRaWAN
 #include <lora_driver.h>
+
+#include "../Source/Headers/CO2.h"
+#include "../Source/Headers/Sound.h"
+#include "../Source/Headers/Temp_Hum.h"
 
 
 
@@ -75,19 +80,35 @@ void create_tasks_and_semaphores(void)
 	,  1  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
 	,  NULL );
 	
+	CO2_t CO2Sensor = createCO2();
+	Temp_Hum_t TempHumSensor = createTempHumid();
+	Sound_t soundSensor = createSound();
+	EventGroupHandle_t measureEventGroup = xEventGroupCreate();
+	EventGroupHandle_t dataReadyEventGroup = xEventGroupCreate();
+	
+	void* pvParameters[4];
+	
+	pvParameters[0] = CO2Sensor;
+	pvParameters[1] = measureEventGroup;
+	pvParameters[2] = dataReadyEventGroup;
+	
 	xTaskCreate(
-	CO2Sensor
+	CO2_task
 	, "CO2 sensor"
 	, configMINIMAL_STACK_SIZE
-	, xTestSemaphore
+	, pvParameters
 	, 3
 	, NULL);
 	
+	pvParameters[0] = TempHumSensor;
+	pvParameters[1] = measureEventGroup;
+	pvParameters[2] = dataReadyEventGroup;
+	
 	xTaskCreate(
-	T_HSensor
+	temp_humid_task
 	, "TH sensor"
 	, configMINIMAL_STACK_SIZE
-	, xTestSemaphore
+	, pvParameters
 	, 3
 	, NULL);
 }
