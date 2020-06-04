@@ -17,13 +17,14 @@
 // define two Tasks
 void task1( void *pvParameters );
 void task2( void *pvParameters );
-
+void CO2Sensor(void *pvParameters);
 
 // define semaphore handle
 SemaphoreHandle_t xTestSemaphore;
 
 
 /*-----------------------------------------------------------*/
+void mh_z19_create(e_com_port_t com_port, NULL);
 
 void create_tasks_and_semaphores(void)
 {
@@ -97,6 +98,37 @@ void task2( void *pvParameters )
 		PORTA ^= _BV(PA7);
 	}
 }
+void CO2Sensor(void *pvParameters){
+	printf("we fucked up");
+	uint16_t lastCO2ppm;
+	mh_z19_return_code_t return_code;
+	mh_z19_create(ser_USART3, NULL);
+	int count = 0;
+	while(count < 5){
+		return_code = mh_z19_get_co2_ppm(&lastCO2ppm);
+
+		if(return_code == MHZ19_OK){
+			puts("CO2 measured: %d" , lastCO2ppm);
+		}
+		else if (return_code == MHZ19_NO_MEASSURING_AVAILABLE){
+			puts("no measurement found!");
+			mh_z19_take_meassuring();
+			puts("Performing a measurement!");
+			mh_z19_get_co2_ppm(&lastCO2ppm);
+			puts("CO2 measured: %d" , lastCO2ppm);
+		}
+		else if (return_code == MHZ19_NO_SERIAL){
+			puts("we fucked up");
+		}
+		else if(return_code == MHZ19_PPM_MUST_BE_GT_999){
+			puts("we fucked up some more");
+		}
+		count++;
+		vTaskDelay(5000);
+	}
+}
+
+
 
 /*-----------------------------------------------------------*/
 int main(void)
