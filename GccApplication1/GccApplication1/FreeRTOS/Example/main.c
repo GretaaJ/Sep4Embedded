@@ -17,10 +17,10 @@
 // define two Tasks
 void task1( void *pvParameters );
 void task2( void *pvParameters );
-void CO2Sensor(void *pvParameters);
+void _co2_Task(void *pvParameters);
 
 // define semaphore handle
-SemaphoreHandle_t xTestSemaphore;
+SemaphoreHandle_t sensorSemaphore;
 
 
 /*-----------------------------------------------------------*/
@@ -31,12 +31,12 @@ void create_tasks_and_semaphores(void)
 	// Semaphores are useful to stop a Task proceeding, where it should be paused to wait,
 	// because it is sharing a resource, such as the Serial port.
 	// Semaphores should only be used whilst the scheduler is running, but we can set it up here.
-	if ( xTestSemaphore == NULL )  // Check to confirm that the Semaphore has not already been created.
+	if ( sensorSemaphore == NULL )  // Check to confirm that the Semaphore has not already been created.
 	{
-		xTestSemaphore = xSemaphoreCreateMutex();  // Create a mutex semaphore.
-		if ( ( xTestSemaphore ) != NULL )
+		sensorSemaphore = xSemaphoreCreateMutex();  // Create a mutex semaphore.
+		if ( ( sensorSemaphore ) != NULL )
 		{
-			xSemaphoreGive( ( xTestSemaphore ) );  // Make the mutex available for use, by initially "Giving" the Semaphore.
+			xSemaphoreGive( ( sensorSemaphore ) );  // Make the mutex available for use, by initially "Giving" the Semaphore.
 		}
 	}
 
@@ -57,7 +57,7 @@ void create_tasks_and_semaphores(void)
 	,  NULL );
 	
 	xTaskCreate(
-	CO2Sensor
+	_co2_Task
 	, "CO2 sensor"
 	, configMINIMAL_STACK_SIZE
 	, NULL
@@ -98,7 +98,7 @@ void task2( void *pvParameters )
 		PORTA ^= _BV(PA7);
 	}
 }
-void CO2Sensor(void *pvParameters){
+void _co2_Task(void *pvParameters){
 	printf("we fucked up");
 	uint16_t lastCO2ppm;
 	mh_z19_return_code_t return_code;

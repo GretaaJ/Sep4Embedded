@@ -1,13 +1,14 @@
-/*
- * CO2.h
- *
- * Created: 5/31/2020 5:38:34 PM
- *  Author: greta
- */ 
-#include <stdint.h>
-#include <mh_z19.h>
-#include <semphr.h>
+#pragma once
 
-void CO2Sensor(void *pvParameters);
-void my_co2_call_back(uint16_t ppm);
-//mh_z19_create(ser_USART3, &my_co2_call_back);
+#include "ATMEGA_FreeRTOS.h"
+#include "semphr.h"
+#include "event_groups.h"
+
+#include <stdint.h>
+
+typedef struct CO2 CO2;
+typedef struct CO2* CO2_t;
+
+CO2_t co2_Create(EventGroupHandle_t measureEventGroup, EventGroupHandle_t dataReadyEventGroup, SemaphoreHandle_t semaphore);
+uint16_t co2_getData(CO2_t self);
+void _co2_Task(void* pvParameters);

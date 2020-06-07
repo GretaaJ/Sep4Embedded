@@ -46,7 +46,7 @@
     <com_atmel_avrdbg_tool_atmelice>
       <ToolOptions>
         <InterfaceProperties>
-          <JtagDbgClock>200000</JtagDbgClock>
+          <JtagDbgClock>1113231</JtagDbgClock>
         </InterfaceProperties>
         <InterfaceName>JTAG</InterfaceName>
       </ToolOptions>
@@ -55,7 +55,7 @@
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
     <avrtoolinterface>JTAG</avrtoolinterface>
-    <avrtoolinterfaceclock>200000</avrtoolinterfaceclock>
+    <avrtoolinterfaceclock>1113231</avrtoolinterfaceclock>
     <com_atmel_avrdbg_tool_simulator>
       <ToolOptions xmlns="">
         <InterfaceProperties>
@@ -67,6 +67,17 @@
       </ToolNumber>
       <ToolName xmlns="">Simulator</ToolName>
     </com_atmel_avrdbg_tool_simulator>
+    <custom>
+      <ToolOptions xmlns="">
+        <InterfaceProperties>
+        </InterfaceProperties>
+        <InterfaceName>JTAG</InterfaceName>
+      </ToolOptions>
+      <ToolType xmlns="">custom</ToolType>
+      <ToolNumber xmlns="">
+      </ToolNumber>
+      <ToolName xmlns="">Custom Programming Tool</ToolName>
+    </custom>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -132,7 +143,6 @@
             <Value>../drivers</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
-        <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
         <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
         <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
         <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
@@ -161,19 +171,55 @@
     <Compile Include="drivers\display_7seg.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="drivers\docs\example\loraWANHandler.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="Source\Headers\CO2.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Source\Headers\Temp_Hum.h">
+    <Compile Include="Source\Headers\config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Headers\Controller.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Headers\DataPacketHandler.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Headers\Initialize.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Headers\loraUpLinkHandler.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Headers\Servo.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Headers\Sound.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Headers\Temperature_Humidity.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Misc\DataPacketHandler.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Misc\Initialize.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Misc\Servo.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Source\Tasks\CO2.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Source\Tasks\Temp_Hum.c">
+    <Compile Include="Source\Tasks\Controller.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Tasks\loraUpLink.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Tasks\Sound.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\Tasks\Temperature_Humidity.c">
       <SubType>compile</SubType>
     </Compile>
     <None Include="drivers\docs\example\main.c">
@@ -351,6 +397,7 @@
     <Folder Include="FreeRTOS\src\" />
     <Folder Include="Source" />
     <Folder Include="Source\Headers" />
+    <Folder Include="Source\Misc" />
     <Folder Include="Source\Tasks" />
   </ItemGroup>
   <ItemGroup>

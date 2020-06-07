@@ -1,5 +1,7 @@
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class DbConnectionImpl implements DbConnection{
     static String connectionStr =
@@ -10,17 +12,32 @@ public class DbConnectionImpl implements DbConnection{
 
     @Override
     public void insert(float co2, float humidity, float temperature, int roomId, float noise) {
-        LocalDate date = LocalDate.now();
-        String insertSql = "INSERT INTO [dbo].[Metrics] (Humidity, Temperature, Noise, CO2, LastUpdated, R_ID) " +
-                "VALUES (" + humidity +", " + temperature + ", "+ noise+", "+ co2+", "+date+" , "+roomId+")";
+        LocalDateTime date = LocalDateTime.now();
+        String insertSql = "INSERT INTO [dbo].[Metrics] (Humidity, Temperature, Noise, CO2, LastUpdated, ProductID) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
         ResultSet resultSet = null;
-        try (Connection connection = DriverManager.getConnection(connectionStr);
-             PreparedStatement prepsInsertProduct = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);)
+        //Date date  = new Date(System.currentTimeMillis());
+        System.out.println(date.toString());
+        //date.setTime(System.currentTimeMillis());
+
+
+
+        try
         {
+            Connection connection = DriverManager.getConnection(connectionStr);
+            PreparedStatement prepsInsertProduct = connection.prepareStatement(insertSql);
+
+
+            prepsInsertProduct.setFloat     (1, humidity);
+            prepsInsertProduct.setFloat     (2, temperature);
+            prepsInsertProduct.setFloat     (3, noise);
+            prepsInsertProduct.setFloat     (4, co2);
+            prepsInsertProduct.setObject     (5, date);
+            prepsInsertProduct.setInt       (6, roomId);
 
             prepsInsertProduct.execute();
             // Retrieve the generated key from the insert.
-            resultSet = prepsInsertProduct.getGeneratedKeys();
+            //resultSet = prepsInsertProduct.getGeneratedKeys();
 
             // Print the ID of the inserted row.
 

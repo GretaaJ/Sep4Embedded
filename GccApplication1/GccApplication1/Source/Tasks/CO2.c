@@ -1,33 +1,107 @@
-/*
- * CO2.c
- *
- * Created: 5/28/2020 6:33:07 PM
- *  Author: greta
- */ 
-#include <ATMEGA_FreeRTOS.h>
-#include <stdio.h>
-#include <stdio_driver.h>
-#include "../Headers/CO2.h"
-#include <semphr.h>
 #include "mh_z19.h"
 
-SemaphoreHandle_t xTestSemaphore;
+#include "../Headers/CO2.h"
+#include "../Headers/config.h"
 
-void CO2Sensor(void *pvParameters){
-	xTestSemaphore = pvParameters;
-	while(1){
-		vTaskDelay(1000);
-		int r = mh_z19_take_meassuring();
-		if(r != MHZ19_OK)
-		{
-			printf("CO2 sensor: %d", r);
-		}
-		vTaskDelay(9000);
+#include <stdio.h>
+#include <stdlib.h>
+
+
+struct CO2{
+	uint16_t lastCO2ppm;
+	
+	EventGroupHandle_t measureEventGroup;
+	EventGroupHandle_t dataReadyEventGroup;	
+	SemaphoreHandle_t semaphore;
+};
+
+EventBits_t waitCO2_MEASUR_BIT;
+
+
+static void co2_InitDriver(){
+	mh_z19_create(ser_USART3, NULL);
+	
+	//if (rc != MHZ19_OK){
+		////print
+	//}
+	//else{
+		////print
+	//}
+}
+
+CO2_t co2_Create(EventGroupHandle_t measureEventGroup, EventGroupHandle_t dataReadyEventGroup, SemaphoreHandle_t semaphore){
+	co2_InitDriver();
+	
+	CO2_t self = malloc(sizeof(CO2));
+	
+	if (self == NULL){
+		return NULL;
+	}
+	
+	self->lastCO2ppm = 0;
+	self->measureEventGroup = measureEventGroup;
+	self->dataReadyEventGroup = dataReadyEventGroup;
+	self->semaphore = semaphore;
+	
+	return self;
+}
+
+
+uint16_t co2_getData(CO2_t self){
+	if (self->lastCO2ppm == 0)
+	{
+		//puts("CO2 measurement not saved correctly");
+		return self->lastCO2ppm;
+	}
+	else
+	{
+		return self->lastCO2ppm;
+	}
+	
+}
+
+static void co2_MeasureData(){
+	int r = mh_z19_take_meassuring();
+		if(r != MHZ19_OK){
+		//puts("CO2 sensor: not ok");
+	}
+	else{
+		//puts
 	}
 }
 
-void my_co2_call_back(uint16_t ppm){
-	xSemaphoreTake (xTestSemaphore, portMAX_DELAY);
-	printf("CO2 measured: %u \n", ppm);
-	xSemaphoreGive(xTestSemaphore);
+static void co2_setData(CO2_t self){
+	mh_z19_get_co2_ppm(&self->lastCO2ppm);
+	printf("CO2 is: %d\n", co2_getData(self));
 }
+
+void _co2_Task(void *pvParameters){
+	
+	CO2_t self = (CO2_t)pvParameters;
+	
+	while(1){
+		
+		waitCO2_MEASUR_BIT = xEventGroupWaitBits(self->measureEventGroup,
+		CO2_MEASURE_BIT,
+		pdTRUE,
+		pdTRUE,
+		portMAX_DELAY);
+		
+		if ((waitCO2_MEASUR_BIT & (CO2_MEASURE_BIT)) == (CO2_MEASURE_BIT))
+		{
+			xSemaphoreTake(self->semaphore, portMAX_DELAY);
+			
+			co2_MeasureData();
+			
+			vTaskDelay(oneSecond);
+			
+			co2_setData(self);
+
+			xEventGroupSetBits(self->dataReadyEventGroup, CO2_READY_BIT);
+			
+			xSemaphoreGive(self->semaphore);
+		}
+
+	}
+}
+

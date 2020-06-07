@@ -92,14 +92,14 @@ public class WebSocketClient implements WebSocket.Listener {
 
         var ratio = 100;
 
-        float floatHumidity = ((float)intHumidity)/ratio;
-        float floatTemperature = ((float)intTemperature)/ratio;
-        float floatCO2 = ((float)intCO2)/ratio;
+        float floatHumidity = ((float)intHumidity);
+        float floatTemperature = ((float)intTemperature);
+        float floatCO2 = ((float)intCO2);
         //TODO: EEEEEEEEEEE
-        float floatNoise = ((float)intNoise)/ratio;
+        float floatNoise = ((float)intNoise);
 
         //TODO:  heee
-        database.insert(floatCO2, floatHumidity, floatTemperature, 1, floatNoise);
+        database.insert(floatCO2, floatHumidity, floatTemperature, 420691337, floatNoise);
         System.out.println("Temperature: " + floatTemperature + "\nHumidity: " + floatHumidity + "\nCO2: "  + floatCO2 + "\n");
 
         return new CompletableFuture().completedFuture("onText() completed.").thenAccept(System.out::println);
