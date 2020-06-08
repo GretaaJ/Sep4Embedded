@@ -7,30 +7,24 @@
 #include <stdlib.h>
 
 
-struct CO2{
+typedef struct CO2{
 	uint16_t lastCO2ppm;
 	
 	EventGroupHandle_t measureEventGroup;
 	EventGroupHandle_t dataReadyEventGroup;	
 	SemaphoreHandle_t semaphore;
-};
+}CO2;
 
 EventBits_t waitCO2_MEASUR_BIT;
 
 
-static void co2_InitDriver(){
+static void co2_initDriver(){
 	mh_z19_create(ser_USART3, NULL);
-	
-	//if (rc != MHZ19_OK){
-		////print
-	//}
-	//else{
-		////print
-	//}
+
 }
 
-CO2_t co2_Create(EventGroupHandle_t measureEventGroup, EventGroupHandle_t dataReadyEventGroup, SemaphoreHandle_t semaphore){
-	co2_InitDriver();
+CO2_t co2_create(EventGroupHandle_t measureEventGroup, EventGroupHandle_t dataReadyEventGroup, SemaphoreHandle_t semaphore){
+	co2_initDriver();
 	
 	CO2_t self = malloc(sizeof(CO2));
 	
@@ -60,7 +54,7 @@ uint16_t co2_getData(CO2_t self){
 	
 }
 
-static void co2_MeasureData(){
+static void co2_measureData(){
 	int r = mh_z19_take_meassuring();
 		if(r != MHZ19_OK){
 		//puts("CO2 sensor: not ok");
@@ -75,7 +69,7 @@ static void co2_setData(CO2_t self){
 	printf("CO2 is: %d\n", co2_getData(self));
 }
 
-void _co2_Task(void *pvParameters){
+void _co2_task(void *pvParameters){
 	
 	CO2_t self = (CO2_t)pvParameters;
 	
@@ -91,7 +85,7 @@ void _co2_Task(void *pvParameters){
 		{
 			xSemaphoreTake(self->semaphore, portMAX_DELAY);
 			
-			co2_MeasureData();
+			co2_measureData();
 			
 			vTaskDelay(oneSecond);
 			

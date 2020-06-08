@@ -6,9 +6,8 @@
 
 #include <stdint.h>
 
-typedef struct CO2 CO2;
 typedef struct CO2* CO2_t;
 
-CO2_t co2_Create(EventGroupHandle_t measureEventGroup, EventGroupHandle_t dataReadyEventGroup, SemaphoreHandle_t semaphore);
+CO2_t co2_create(EventGroupHandle_t measureEventGroup, EventGroupHandle_t dataReadyEventGroup, SemaphoreHandle_t semaphore);
 uint16_t co2_getData(CO2_t self);
-void _co2_Task(void* pvParameters);
+void _co2_task(void* pvParameters);

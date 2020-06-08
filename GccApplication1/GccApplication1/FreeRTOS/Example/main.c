@@ -17,7 +17,7 @@
 // define two Tasks
 void task1( void *pvParameters );
 void task2( void *pvParameters );
-void _co2_Task(void *pvParameters);
+void _co2_task(void *pvParameters);
 
 // define semaphore handle
 SemaphoreHandle_t sensorSemaphore;
@@ -57,7 +57,7 @@ void create_tasks_and_semaphores(void)
 	,  NULL );
 	
 	xTaskCreate(
-	_co2_Task
+	_co2_task
 	, "CO2 sensor"
 	, configMINIMAL_STACK_SIZE
 	, NULL
@@ -98,7 +98,7 @@ void task2( void *pvParameters )
 		PORTA ^= _BV(PA7);
 	}
 }
-void _co2_Task(void *pvParameters){
+void _co2_task(void *pvParameters){
 	printf("we fucked up");
 	uint16_t lastCO2ppm;
 	mh_z19_return_code_t return_code;

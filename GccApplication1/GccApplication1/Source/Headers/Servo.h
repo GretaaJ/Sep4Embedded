@@ -1,10 +1,8 @@
 #pragma once
 
-typedef struct Servo Servo;
 typedef struct Servo* Servo_t;
 
-
-Servo_t createServo();
-void openWindowServo(Servo_t self);
-void closeWindowServo(Servo_t self);
-void halfOpenWindowServo(Servo_t self);
+Servo_t servo_create();
+void servo_openWindow(Servo_t self);
+void servo_closeWindow(Servo_t self);
+void servo_halfOpenWindow(Servo_t self);

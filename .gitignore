@@ -56,3 +56,6 @@ Mkfile.old
 dkms.conf
 GccApplication1/.vs/GccApplication1/v14/.atsuo
 GccApplication1/GccApplication1/Debug/Makefile
+GccApplication1/.vs/GccApplication1/v14/.atsuo
+BridgeApp/out/production/BridgeApp/WebSocketClient.class
+BridgeApp/out/production/BridgeApp/DbConnectionImpl.class

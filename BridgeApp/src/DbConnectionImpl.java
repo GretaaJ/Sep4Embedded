@@ -7,7 +7,6 @@ public class DbConnectionImpl implements DbConnection{
     static String connectionStr =
             "jdbc:sqlserver://sepfour.database.windows.net:1433;database=SEP4;user=superuser@sepfour;password=28052020Ul;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
     public DbConnectionImpl(){
-
     }
 
     @Override
@@ -16,17 +15,12 @@ public class DbConnectionImpl implements DbConnection{
         String insertSql = "INSERT INTO [dbo].[Metrics] (Humidity, Temperature, Noise, CO2, LastUpdated, ProductID) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
         ResultSet resultSet = null;
-        //Date date  = new Date(System.currentTimeMillis());
         System.out.println(date.toString());
-        //date.setTime(System.currentTimeMillis());
-
-
 
         try
         {
             Connection connection = DriverManager.getConnection(connectionStr);
             PreparedStatement prepsInsertProduct = connection.prepareStatement(insertSql);
-
 
             prepsInsertProduct.setFloat     (1, humidity);
             prepsInsertProduct.setFloat     (2, temperature);
@@ -36,21 +30,11 @@ public class DbConnectionImpl implements DbConnection{
             prepsInsertProduct.setInt       (6, roomId);
 
             prepsInsertProduct.execute();
-            // Retrieve the generated key from the insert.
-            //resultSet = prepsInsertProduct.getGeneratedKeys();
 
-            // Print the ID of the inserted row.
-
-            if(resultSet  !=   null)
-            {
-                System.out.println("Hjelp");
-            }
         }
         // Handle any errors that may have occurred.
         catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-
 }

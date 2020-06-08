@@ -5,13 +5,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-struct Servo{
+typedef struct Servo{
 	int isOpen;
 	int isClosed;
 	int isHalfOpen;
-};
+}Servo;
 
-Servo_t createServo(){
+Servo_t servo_create(){
 	rcServoCreate();
 	
 	Servo_t self = malloc(sizeof(Servo));
@@ -28,7 +28,7 @@ Servo_t createServo(){
 	return self;
 }
 
-void openWindowServo(Servo_t self)
+void servo_openWindow(Servo_t self)
 {
 	if (!self->isOpen){
 	
@@ -39,7 +39,7 @@ void openWindowServo(Servo_t self)
 	}
 }
 
-void closeWindowServo(Servo_t self)
+void servo_closeWindow(Servo_t self)
 {
 	if (!self->isClosed){
 		
@@ -51,7 +51,7 @@ void closeWindowServo(Servo_t self)
 	
 }
 
-void halfOpenWindowServo(Servo_t self)
+void servo_halfOpenWindow(Servo_t self)
 {
 	if (!self->isHalfOpen){
 			
@@ -62,3 +62,4 @@ void halfOpenWindowServo(Servo_t self)
 	}
 	
 }
+

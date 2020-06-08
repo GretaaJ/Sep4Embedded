@@ -13,13 +13,17 @@
 static char _out_buf[100];
 static lora_payload_t _uplink_payload;
 
-struct LoraUpLink{
+typedef struct LoraUpLink{
 	EventGroupHandle_t loraReadyEventGroup;
 	QueueHandle_t payloadQueue;
 	
-};
+} LoraUpLink;
 
-LoraUpLink_t createLoraUpLink(EventGroupHandle_t loraReadyEventGroup, QueueHandle_t payloadQueue){
+static void lora_sendPayload(LoraUpLink_t);
+
+static void lora_emptyQueueOnStartUp(LoraUpLink_t);
+
+LoraUpLink_t lora_createUpLink(EventGroupHandle_t loraReadyEventGroup, QueueHandle_t payloadQueue){
 	LoraUpLink_t self = malloc(sizeof(LoraUpLink));
 	
 	self->loraReadyEventGroup = loraReadyEventGroup;
@@ -81,7 +85,8 @@ static void _lora_setup(LoraUpLink_t self)
 
 	if (rc == LoRa_ACCEPTED)
 	{
-		xEventGroupSetBits(self->loraReadyEventGroup, LORA_CONNECTED_BIT);
+		lora_emptyQueueOnStartUp(self);
+		
 		// Connected to LoRaWAN :-)
 		// Make the green led steady
 		led_led_on(led_ST2); // OPTIONAL
@@ -118,32 +123,46 @@ static void lora_startUp(LoraUpLink_t self){
 	_lora_setup(self);
 }
 
+static void lora_sendPayload(LoraUpLink_t self){
+	static e_LoRa_return_code_t rc;
+	
+	if (self->payloadQueue != NULL){
+		if (xQueuePeek(self->payloadQueue, &_uplink_payload, portMAX_DELAY));{
+			rc = lora_driver_sent_upload_message(false, &_uplink_payload);
+			
+			printf("Upload Message >%s<\n", lora_driver_map_return_code_to_text(rc));
+			
+			led_short_puls(led_ST4);  // OPTIONAL
+			if (rc == LoRa_NO_FREE_CH){
+				xEventGroupClearBits(self->loraReadyEventGroup, LORA_CONNECTED_BIT);
+				lora_startUp(self);
+			}
+			else if (rc == LoRa_MAC_TX_OK){
+				xQueueReceive(self->payloadQueue, &_uplink_payload, portMAX_DELAY);
+			}	
+		}
+	}
+	
+}
+
+static void lora_emptyQueueOnStartUp(LoraUpLink_t self){
+	while (uxQueueMessagesWaiting(self->payloadQueue) != 0){
+		lora_sendPayload(self);
+	}
+	puts("payloadQueue is empty");
+	xEventGroupSetBits(self->loraReadyEventGroup, LORA_CONNECTED_BIT);
+}
+
 /*-----------------------------------------------------------*/
-void loraUpLinkTask( void *pvParameters )
+void _lora_uplink_task( void *pvParameters )
 {
 	LoraUpLink_t self = (LoraUpLink_t)pvParameters;
 	
 	lora_startUp(self);
-
-	static e_LoRa_return_code_t rc;
 	
 	for(;;)
 	{
-		//vTaskDelay(oneMinute);
-		
-		if (self->payloadQueue != NULL){
-			if (xQueueReceive(self->payloadQueue, &_uplink_payload, portMAX_DELAY));{}
-		}
-			
-		rc = lora_driver_sent_upload_message(false, &_uplink_payload);
-		
-		printf("Upload Message >%s<\n", lora_driver_map_return_code_to_text(rc));
-		
-		led_short_puls(led_ST4);  // OPTIONAL
-		if (rc == LoRa_NO_FREE_CH){
-			xEventGroupClearBits(self->loraReadyEventGroup, LORA_CONNECTED_BIT);
-			lora_startUp(self);
-		}
+		lora_sendPayload(self);
 		
 	}
 }

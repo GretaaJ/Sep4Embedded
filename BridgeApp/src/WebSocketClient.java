@@ -67,41 +67,43 @@ public class WebSocketClient implements WebSocket.Listener {
     };
     //onText()
     public CompletionStage<?> onText​(WebSocket webSocket, CharSequence data, boolean last) {
-        //String indented = (new JSONObject(data.toString())).toString(4);
-        //System.out.println(indented);
         webSocket.request(1);
 
         String dataString = data.toString();
         var parser = new JSONParser();
         JSONObject json;
         String hexData =  "";
+        String cmd = "";
         try {
             json  = (JSONObject) parser.parse(dataString);
             hexData = (String) json.get("data");
+            cmd = (String) json.get("cmd");
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        String[] hexMeasurement = hexData.split("(?<=\\G....)");
+        if (cmd.equalsIgnoreCase("rx")) {
+            String[] hexMeasurement = hexData.split("(?<=\\G....)");
 
-        int intHumidity = Integer.parseInt(hexMeasurement[0], 16);
-        int intTemperature = Integer.parseInt(hexMeasurement[1], 16);
-        int intCO2 = Integer.parseInt(hexMeasurement[2], 16);
-        //TODO:  eeee
-        int intNoise = Integer.parseInt(hexMeasurement[3], 16);
+            int intHumidity = Integer.parseInt(hexMeasurement[0], 16);
+            int intTemperature = Integer.parseInt(hexMeasurement[1], 16);
+            int intCO2 = Integer.parseInt(hexMeasurement[2], 16);
+            //TODO:  eeee
+            int intNoise = Integer.parseInt(hexMeasurement[3], 16);
 
-        var ratio = 100;
 
-        float floatHumidity = ((float)intHumidity);
-        float floatTemperature = ((float)intTemperature);
-        float floatCO2 = ((float)intCO2);
-        //TODO: EEEEEEEEEEE
-        float floatNoise = ((float)intNoise);
+            float floatHumidity = ((float)intHumidity);
+            float floatTemperature = ((float)intTemperature);
+            float floatCO2 = ((float)intCO2);
+            //TODO: EEEEEEEEEEE
+            float floatNoise = ((float)intNoise);
 
-        //TODO:  heee
-        database.insert(floatCO2, floatHumidity, floatTemperature, 420691337, floatNoise);
-        System.out.println("Temperature: " + floatTemperature + "\nHumidity: " + floatHumidity + "\nCO2: "  + floatCO2 + "\n");
+            //TODO:  heee
+            database.insert(floatCO2, floatHumidity, floatTemperature, 55555555, floatNoise);
+            System.out.println("Temperature: " + floatTemperature + "\nHumidity: " + floatHumidity + "\nCO2: "  + floatCO2 + "\nSound " + floatNoise + "\n");
+            return new CompletableFuture().completedFuture("onText() completed.").thenAccept(System.out::println);
+        }
 
-        return new CompletableFuture().completedFuture("onText() completed.").thenAccept(System.out::println);
+        return new CompletableFuture().completedFuture("onText() not complete due to wrong cmd identifier.").thenAccept(System.out::println);
     };
 }

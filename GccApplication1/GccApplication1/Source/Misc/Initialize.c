@@ -15,7 +15,7 @@
 #include "../Headers/Initialize.h"
 
 
-uint16_t maxQueueSize = 10;
+static uint16_t maxQueueSize = 10;
 
 #define SENSOR_PRIORITY			(tskIDLE_PRIORITY + 1)
 #define CONTROLLER_PRIORITY		(SENSOR_PRIORITY + 1)
@@ -59,24 +59,24 @@ static void initialize()
 	
 	queue = xQueueCreate(maxQueueSize, sizeof(lora_payload_t));
 	
-	th_Sensor = createTemp(measureEventGroup, dataReadyEventGroup, sensorSemaphore);
-	sound_Sensor = sound_Create(measureEventGroup, dataReadyEventGroup, sensorSemaphore);
-	co2_Sensor = co2_Create(measureEventGroup, dataReadyEventGroup, sensorSemaphore);
+	th_Sensor = th_create(measureEventGroup, dataReadyEventGroup, sensorSemaphore);
+	sound_Sensor = sound_create(measureEventGroup, dataReadyEventGroup, sensorSemaphore);
+	co2_Sensor = co2_create(measureEventGroup, dataReadyEventGroup, sensorSemaphore);
 	
-	servoWindow = createServo();
+	servoWindow = servo_create();
 	
-	lora_UpLink = createLoraUpLink(loraReadyEventGroup, queue);
-	controller_ = createController(queue, measureEventGroup, dataReadyEventGroup, loraReadyEventGroup, sensorSemaphore,co2_Sensor, th_Sensor, sound_Sensor, servoWindow);
+	lora_UpLink = lora_createUpLink(loraReadyEventGroup, queue);
+	controller_ = controller_create(queue, measureEventGroup, dataReadyEventGroup, loraReadyEventGroup, sensorSemaphore,co2_Sensor, th_Sensor, sound_Sensor, servoWindow);
 	
 	xTaskCreate(
-	loraUpLinkTask,
+	_lora_uplink_task,
 	"UpLink task",  
 	LORA_UPLINK_STACK_SIZE,  
 	lora_UpLink,  
 	LORA_UPLINK_PRIORITY,  
 	NULL);
 	
-	xTaskCreate(ControllerTask,
+	xTaskCreate(_controller_task,
 	"Controller task",
 	CONTROLLER_STACK_SIZE,
 	controller_,
@@ -84,7 +84,7 @@ static void initialize()
 	NULL);
 	
 	xTaskCreate(
-	_co2_Task, 
+	_co2_task, 
 	"CO2 sensor", 
 	SENSOR_STACK_SIZE, 
 	co2_Sensor, 
@@ -92,7 +92,7 @@ static void initialize()
 	NULL);
 	
 	xTaskCreate(
-	th_Task,
+	_th_task,
 	"temperature and humidity sensor", 
 	SENSOR_STACK_SIZE, 
 	th_Sensor, 

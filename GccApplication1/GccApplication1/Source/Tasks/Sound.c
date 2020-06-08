@@ -6,14 +6,14 @@
 
 EventBits_t waitSoundBit;
 
-struct Sound {
+typedef struct Sound {
 	uint16_t dBMeasured;
 	EventGroupHandle_t measureEventGroup;
 	EventGroupHandle_t dataReadyEventGroup;
 	SemaphoreHandle_t semaphore;
-};
+}Sound;
 
-Sound_t sound_Create(EventGroupHandle_t measureEventGroup, EventGroupHandle_t dataReadyEventGroup, SemaphoreHandle_t semaphore) {
+Sound_t sound_create(EventGroupHandle_t measureEventGroup, EventGroupHandle_t dataReadyEventGroup, SemaphoreHandle_t semaphore) {
 	Sound_t self = malloc(sizeof(Sound));
 
 	if (self == NULL){
@@ -28,7 +28,7 @@ Sound_t sound_Create(EventGroupHandle_t measureEventGroup, EventGroupHandle_t da
 	return self;
 }
 
-static void sound_Measure(Sound_t self) {
+static void sound_measure(Sound_t self) {
 	self->dBMeasured = (rand() % (150 - 0 + 1) + 0);
 	printf("Sound: %d\n", self->dBMeasured);
 }
@@ -52,7 +52,7 @@ void _sound_task(void* pvParameters) {
 		{
 			xSemaphoreTake(self->semaphore, portMAX_DELAY);
 			
-			sound_Measure(self);
+			sound_measure(self);
 
 			xEventGroupSetBits(self->dataReadyEventGroup, SOUND_READY_BIT);
 								
@@ -60,7 +60,7 @@ void _sound_task(void* pvParameters) {
 		}
 		else
 		{
-			//puts("Sound measurement wasn't conducted because it timed out waiting for bits"); 
+			//puts("timed out waiting for SOUND_MEASURE_BIT to be set"); 
 		}		
 
 	}

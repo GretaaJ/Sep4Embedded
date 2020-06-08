@@ -8,7 +8,7 @@
 
 EventBits_t waitTHBits;
 
-struct Temperature_Humidity{
+typedef struct Temperature_Humidity{
 	EventGroupHandle_t measureDataEventGroup;
 	EventGroupHandle_t dataReadyEventGroup;
 	SemaphoreHandle_t semaphore;
@@ -16,10 +16,10 @@ struct Temperature_Humidity{
 	uint16_t temperature;
 	uint16_t humidity;
 	
-};
+}Temperature_Humidity;
 
 
-static void th_InitDriver(){
+static void th_initDriver(){
 		if (HIH8120_OK != hih8120Create()){
 			//puts("There is not enough HEAP memory to create the driver.");
 		}
@@ -28,9 +28,9 @@ static void th_InitDriver(){
 		}
 }
 
-Temperature_Humidity_t createTemp(EventGroupHandle_t measureDataEventGroup, EventGroupHandle_t dataReadyEventGroup, SemaphoreHandle_t semaphore) {
+Temperature_Humidity_t th_create(EventGroupHandle_t measureDataEventGroup, EventGroupHandle_t dataReadyEventGroup, SemaphoreHandle_t semaphore) {
 	
-	th_InitDriver();
+	th_initDriver();
 	
 	Temperature_Humidity_t self = malloc(sizeof(Temperature_Humidity));
 	
@@ -49,7 +49,7 @@ Temperature_Humidity_t createTemp(EventGroupHandle_t measureDataEventGroup, Even
 }
 
 
-uint16_t getHum(Temperature_Humidity_t self) {
+uint16_t th_getHum(Temperature_Humidity_t self) {
 	if (self->humidity == -1)
 	{
 		//puts("The returned temperature value is invalid.");
@@ -61,7 +61,7 @@ uint16_t getHum(Temperature_Humidity_t self) {
 	}
 }
 
-uint16_t getTemp(Temperature_Humidity_t self) {
+uint16_t th_getTemp(Temperature_Humidity_t self) {
 	if (self->temperature == -274)
 	{
 		//puts("The returned temperature value is invalid.");
@@ -80,7 +80,7 @@ static void th_wakeup(){
 			
 			if (rc == HIH8120_DRIVER_NOT_CREATED) {
 				//puts("The driver was not created, attempting to create driver.");
-				th_InitDriver();
+				th_initDriver();
 							
 				vTaskDelay(oneSecond);
 				rc = hih8120Wakeup();
@@ -100,7 +100,8 @@ static void th_measure(){
 
 	while (rc != HIH8120_OK){
 		if (rc == HIH8120_DRIVER_NOT_CREATED){
-			th_InitDriver();
+			//puts("The driver was not created, attempting to create driver.");
+			th_initDriver();
 
 			vTaskDelay(oneSecond);
 			rc = hih8120Meassure();
@@ -120,6 +121,7 @@ static void th_waitTillReady(){
 	int isReady = hih8120IsReady();
 	
 	while (!isReady){
+		//puts("the measured temperature and humidity values were not ready, waiting before trying again");
 		vTaskDelay(oneSecond);
 		
 		isReady = hih8120IsReady();
@@ -131,11 +133,11 @@ static void th_setData(Temperature_Humidity_t self){
 	self->humidity = (int)hih8120GetHumidity();
 	self->temperature = (int)hih8120GetTemperature();
 	
-	printf("Hum: %d Temp: %d\n", getHum(self), getTemp(self) );
+	printf("Hum: %d Temp: %d\n", th_getHum(self), th_getTemp(self) );
 }
 
 
-void th_Task(void *pvParameters){
+void _th_task(void *pvParameters){
 		Temperature_Humidity_t self = (Temperature_Humidity_t)pvParameters;
 
 		while (1) {
@@ -167,7 +169,7 @@ void th_Task(void *pvParameters){
 				
 			}
 			else{
-				//puts("haha i timed out");
+				//puts("timed out waiting for TEMP_HUM_MEASURE BIT to be set");
 			}
 
 		}			
