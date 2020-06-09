@@ -88,17 +88,14 @@ public class WebSocketClient implements WebSocket.Listener {
             int intHumidity = Integer.parseInt(hexMeasurement[0], 16);
             int intTemperature = Integer.parseInt(hexMeasurement[1], 16);
             int intCO2 = Integer.parseInt(hexMeasurement[2], 16);
-            //TODO:  eeee
             int intNoise = Integer.parseInt(hexMeasurement[3], 16);
 
 
             float floatHumidity = ((float)intHumidity);
             float floatTemperature = ((float)intTemperature);
             float floatCO2 = ((float)intCO2);
-            //TODO: EEEEEEEEEEE
             float floatNoise = ((float)intNoise);
 
-            //TODO:  heee
             database.insert(floatCO2, floatHumidity, floatTemperature, 55555555, floatNoise);
             System.out.println("Temperature: " + floatTemperature + "\nHumidity: " + floatHumidity + "\nCO2: "  + floatCO2 + "\nSound " + floatNoise + "\n");
             return new CompletableFuture().completedFuture("onText() completed.").thenAccept(System.out::println);
